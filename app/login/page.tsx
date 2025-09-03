@@ -39,8 +39,10 @@ export default function LoginPage() {
       if (error) throw error;
       setSent(true);
       setLeft(15);
-    } catch (e: any) {
-      setErr(e?.message || 'Ошибка отправки ссылки.');
+    } catch (unknownErr: unknown) {
+      const message =
+        unknownErr instanceof Error ? unknownErr.message : 'Ошибка отправки ссылки.';
+      setErr(message);
     }
   };
 
@@ -55,4 +57,31 @@ export default function LoginPage() {
           type="email"
           placeholder="you@example.com"
           value={email}
-          onChange=
+          onChange={onEmail}
+          required
+          style={{
+            width: '100%', padding: '12px 14px', borderRadius: 12, border: '1px solid #d0d0d0',
+            marginBottom: 12, outline: 'none'
+          }}
+        />
+        <button
+          type="submit"
+          disabled={left > 0}
+          style={{
+            width: '100%', padding: '12px 14px', borderRadius: 12, border: '1px solid #111',
+            background: '#111', color: '#fff', cursor: left > 0 ? 'not-allowed' : 'pointer'
+          }}
+        >
+          {left > 0 ? `Подождите ${left}с` : 'Получить ссылку'}
+        </button>
+      </form>
+      {sent && <p style={{ color: '#444', marginTop: 10 }}>
+        Проверьте почту и откройте ссылку <b>в этой же вкладке</b>.
+      </p>}
+      {err && <p style={{ color: '#c00', marginTop: 10 }}>{err}</p>}
+      <p style={{ marginTop: 16 }}>
+        Вернуться на <a href="/dashboard/">/dashboard/</a>
+      </p>
+    </div>
+  );
+}
