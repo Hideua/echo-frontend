@@ -1,0 +1,5 @@
+{
+  "crons": [
+    { "path": "/api/worker/check-deliveries", "schedule": "*/2 * * * *", "method": "POST" }
+  ]
+}
