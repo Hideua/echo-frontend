@@ -1,5 +1,5 @@
 {
-  "crons": [
-    { "path": "/api/worker/check-deliveries", "schedule": "*/2 * * * *", "method": "POST" }
-  ]
+  "functions": {
+    "api/**/*.js": { "runtime": "nodejs20.x" }
+  }
 }
